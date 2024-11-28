@@ -897,7 +897,7 @@ eff_liv <- subset(livestock, select = c(NUTS_ID, eff_ee_outlier))
 # OUTLIERS: NL12, NL31, ES11
 
 # SE
-efficiency_scores_livestock_soc <- print(superdea_out_fixed_weights(x_livestock, y_livestock,
+efficiency_scores_livestock_soc <- print(superdea_out_fixed_weights(x_livestock_s, y_livestock_s,
                                                                     numeric(nrow(livestock)),
                                                                     livestock))
 
