@@ -6,12 +6,21 @@
 #
 # -----------------------------
 
-
 # clear environment and set wd
 rm(list = ls(all.names = TRUE))
 getwd()
 
+# to run this script you need to save a folder with the name "used_data"
+# in your working directory containing all data-files used.
+# All data used in this script is publicly available and obtained from the
+# following sources: 
+# - Eurostat
+# - EDGAR (European Database for Global Atmospheric Research)
+# - Agridata (European Commission)
+# - European Environment Agency
+# - European Medicindes Agency
 
+# The data used in this script can be provided on request
 
 # ---------------------
 #   LOAD PACKAGES     #
