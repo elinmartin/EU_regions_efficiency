@@ -15,12 +15,37 @@ getwd()
 # All data used in this script is publicly available and obtained from the
 # following sources: 
 # - Eurostat
-# - EDGAR (European Database for Global Atmospheric Research)
-# - Agridata (European Commission)
-# - European Environment Agency
-# - European Medicindes Agency
+#   - Economic accounts for agriculture - values at current prices: https://ec.europa.eu/eurostat/databrowser/view/aact_eaa01/default/table?lang=en&category=agr.aact.aact_eaa
+#     DOI https://doi.org/10.2908/AACT_EAA01
+#   - Main farmland use by NUTS2 region: https://ec.europa.eu/eurostat/databrowser/view/ef_lus_main__custom_14710848/default/table?lang=en 
+#     DOI https://doi.org/10.2908/EF_LUS_MAIN
+#   - Farms and hectares by type of crops, utilised agricultural area, economic size and NUTS 2 region: https://ec.europa.eu/eurostat/databrowser/view/ef_lus_allcrops$defaultview/default/table?lang=en
+#     DOI https://doi.org/10.2908/EF_LUS_ALLCROPS 
+#   - Ammonia emissions on a country-level, kg/ha: https://ec.europa.eu/eurostat/databrowser/view/sdg_02_60__custom_12287404/default/table?lang=en
+#     DOI https://doi.org/10.2908/SDG_02_60 
+#   - Farmes sex, training and age: https://ec.europa.eu/eurostat/databrowser/view/ef_mp_training/default/table?lang=en&category=agr.ef.ef_mp 
+#     DOI https://doi.org/10.2908/EF_MP_TRAINING
+#   - Purchasing Power Parity between EU Countries: https://ec.europa.eu/eurostat/databrowser/view/tec00121/default/table?lang=en&category=t_prc.t_prc_ppp
+#     DOI https://doi.org/10.2908/TEC00121
 
-# The data used in this script can be provided on request
+# - EDGAR (European Database for Global Atmospheric Research)
+#   - available at https://edgar.jrc.ec.europa.eu/dataset_ghg70_nuts2 
+
+# - Agridata (European Commission)
+#   - Pesticides harmonised risk indicator I: https://agridata.ec.europa.eu/extensions/IndicatorsEnvironmental/Pesticides.html
+
+# - European Environment Agency
+#   - Nitrate in groundwater: https://www.eea.europa.eu/en/analysis/indicators/nitrate-in-groundwater-8th-eap?activeAccordion
+
+# - European Medicindes Agency
+#   - Antibiotics: https://esvacbi.ema.europa.eu/analytics/saw.dll?Dashboard&PortalPath=%2Fshared%2FESVAC%20Public%2F_portal%2FAnnual%20Report&Page=Overall%20sales
+
+
+# Note that the sources to this data might be updated since the analysis which 
+# might generate differences in the results.
+
+# In case of questions, please contact the author.
+# ------------
 
 # ---------------------
 #   LOAD PACKAGES     #
@@ -2152,12 +2177,15 @@ total_data_rm$eff_se_lpsolve <- print(
 # meta-plot without labels and with larger dots
 p_meta_eff <- ggplot(total_data_rm, aes(x = eff_ee_lpsolve, y = eff_se_lpsolve)) +
   geom_point(size = 3, color = "black") +  # Points
-  geom_text(aes(label = NUTS_ID), vjust = -0.5, hjust = 0.5, size = 3) +  # Add labels
-  labs(title = "Meta efficiency", x = "Efficiency EE", y = "Efficiency SE") +
+  #geom_text(aes(label = NUTS_ID), vjust = -0.5, hjust = 0.5, size = 4) +  # Add labels
+  labs(x = "Efficiency EE", y = "Efficiency SE") +
   theme_bw() +
-  xlim(0, 1.05) + ylim(0, 1.05)
+  xlim(0, 1.05) + ylim(0, 1.05) + 
+  geom_text_repel(data = total_data_rm, aes(x = eff_ee_lpsolve, y = eff_se_lpsolve, label = NUTS_ID),
+                size = 6, color = "black", max.overlaps = 20) +
+  theme(axis.title.x = element_text(size = 20), axis.title.y = element_text(size = 20))
 
-ggsave("figure_5.png", p_meta_eff, width = 10, height = 5)
+ggsave("figure_5.png", p_meta_eff, width = 15, height = 15)
 
 
 
